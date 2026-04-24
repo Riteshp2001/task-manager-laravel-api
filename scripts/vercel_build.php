@@ -7,7 +7,7 @@ if (! $isVercel) {
 }
 
 $projectRoot = dirname(__DIR__);
-$databasePath = $projectRoot.'/database/database.sqlite';
+$databasePath = getenv('DB_DATABASE') ?: '/tmp/database.sqlite';
 $connection = getenv('DB_CONNECTION') ?: 'sqlite';
 
 chdir($projectRoot);
