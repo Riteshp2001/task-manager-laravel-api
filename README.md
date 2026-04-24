@@ -12,7 +12,7 @@ Laravel is the primary backend for the task manager. It handles authentication, 
 - Task status updates with Django-driven overdue rules
 - Consistent JSON responses
 - Form Request validation
-- Seeded credentials and sample data
+- Seeded credentials and starter data
 
 ## Tech choices
 
