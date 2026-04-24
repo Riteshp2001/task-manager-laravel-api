@@ -36,7 +36,7 @@ return [
     ],
 
     'overdue' => [
-        'url' => rtrim((string) env('OVERDUE_SERVICE_URL', 'http://127.0.0.1:9000'), '/'),
+        'url' => rtrim((string) env('OVERDUE_SERVICE_URL', 'https://task-manager-overdue-service.vercel.app'), '/'),
         'key' => env('OVERDUE_SERVICE_KEY'),
         'timeout' => (int) env('OVERDUE_SERVICE_TIMEOUT', 10),
     ],

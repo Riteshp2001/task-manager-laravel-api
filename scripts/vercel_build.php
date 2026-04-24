@@ -7,13 +7,15 @@ if (! $isVercel) {
 }
 
 $projectRoot = dirname(__DIR__);
-$databasePath = getenv('DB_DATABASE') ?: '/tmp/database.sqlite';
 $connection = getenv('DB_CONNECTION') ?: 'sqlite';
 
 chdir($projectRoot);
 
-if ($connection === 'sqlite' && ! file_exists($databasePath)) {
-    touch($databasePath);
+if ($connection === 'sqlite') {
+    $databasePath = $projectRoot . '/database/database.sqlite';
+    if (! file_exists($databasePath)) {
+        touch($databasePath);
+    }
 }
 
 $phpBinary = escapeshellarg(PHP_BINARY);

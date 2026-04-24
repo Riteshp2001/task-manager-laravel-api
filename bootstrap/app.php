@@ -57,7 +57,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (\Throwable $exception, Request $request) {
-            if ($request->expectsJson()) {
+            if ($request->is('api/*') || $request->expectsJson()) {
                 $message = config('app.debug')
                     ? $exception->getMessage()
                     : 'Something went wrong. Please try again.';

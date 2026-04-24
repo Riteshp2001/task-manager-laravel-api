@@ -1,6 +1,6 @@
 # Task Manager API (Laravel)
 
-Laravel is the primary backend for the task manager. It handles authentication, project management, task ownership, and role-based access control. The Django service is used only for overdue-task rule evaluation.
+Laravel is the primary backend for the task manager. It handles authentication, project management, task ownership, and role-based access control. The separate overdue-rules service is used only for overdue-task rule evaluation.
 
 ## What is implemented
 
@@ -35,9 +35,9 @@ Laravel is the primary backend for the task manager. It handles authentication, 
 - `PATCH /tasks/{task}/status`
 - `GET /users/assignees`
 
-## Django integration
+## Overdue rules integration
 
-Laravel calls the Django service for two rule checks:
+Laravel calls the secondary rules service for two checks:
 
 - `POST /api/rules/evaluate-overdue/`
 - `POST /api/rules/validate-transition/`
@@ -53,7 +53,7 @@ The Laravel service class is [`app/Services/OverdueRuleService.php`](app/Service
 
 1. Install PHP, Composer, and a MySQL database.
 2. Copy `.env.example` to `.env`.
-3. Set the database values and Django service URL.
+3. Set the database values and overdue service URL.
 4. Install dependencies:
 
 ```bash

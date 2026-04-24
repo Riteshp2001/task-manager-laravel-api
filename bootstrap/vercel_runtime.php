@@ -41,23 +41,44 @@ if ($vercelUrl && (getenv('APP_URL') === false || getenv('APP_URL') === '')) {
 
 $bundledDatabase = __DIR__.'/../database/database.sqlite';
 $runtimeDatabase = sys_get_temp_dir().'/task-manager.sqlite';
-$connection = getenv('DB_CONNECTION') ?: '';
+$connection = getenv('DB_CONNECTION') ?: 'sqlite';
 $database = getenv('DB_DATABASE') ?: '';
 
-if (($connection === '' || $connection === 'sqlite') && is_file($bundledDatabase)) {
-    $shouldCopyDatabase = ! file_exists($runtimeDatabase)
-        || filesize($runtimeDatabase) === 0
-        || filemtime($bundledDatabase) > filemtime($runtimeDatabase);
-
-    if ($shouldCopyDatabase) {
-        copy($bundledDatabase, $runtimeDatabase);
-    }
-
-    if ($connection === '') {
-        $setRuntimeEnv('DB_CONNECTION', 'sqlite');
-    }
-
-    if ($database === '') {
+if ($connection === 'sqlite') {
+    if (getenv('VERCEL') && is_file($bundledDatabase)) {
+        if (! file_exists($runtimeDatabase) || filesize($runtimeDatabase) === 0) {
+            copy($bundledDatabase, $runtimeDatabase);
+        }
         $setRuntimeEnv('DB_DATABASE', $runtimeDatabase);
+    } elseif ($database === '') {
+        $setRuntimeEnv('DB_DATABASE', $bundledDatabase);
+    }
+} elseif (getenv('VERCEL')) {
+    // Ensure the serverless container prepares the shared database once per cold start.
+    $projectRoot = dirname(__DIR__);
+    $phpBinary = PHP_BINARY;
+    $artisan = $projectRoot.'/artisan';
+    $bootstrapFlag = sys_get_temp_dir().'/task-manager-postgres-ready';
+
+    if (file_exists($artisan) && ! file_exists($bootstrapFlag)) {
+        $commands = [
+            $phpBinary.' '.$artisan.' migrate --force 2>&1',
+            $phpBinary.' '.$artisan.' db:seed --force 2>&1',
+        ];
+
+        foreach ($commands as $command) {
+            $output = [];
+            $returnCode = 0;
+            exec($command, $output, $returnCode);
+
+            if ($returnCode !== 0) {
+                error_log(implode(PHP_EOL, $output));
+                break;
+            }
+        }
+
+        if ($returnCode === 0) {
+            file_put_contents($bootstrapFlag, 'ready');
+        }
     }
 }
