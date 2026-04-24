@@ -50,7 +50,7 @@ class TaskApiTest extends TestCase
 
         Sanctum::actingAs($member);
 
-        $response = $this->patchJson("/api/tasks/{$task->id}/status", [
+        $response = $this->patchJson("/tasks/{$task->id}/status", [
             'status' => Task::STATUS_IN_PROGRESS,
         ]);
 
@@ -94,7 +94,7 @@ class TaskApiTest extends TestCase
 
         Sanctum::actingAs($admin);
 
-        $response = $this->patchJson("/api/tasks/{$task->id}/status", [
+        $response = $this->patchJson("/tasks/{$task->id}/status", [
             'status' => Task::STATUS_DONE,
         ]);
 
@@ -136,7 +136,7 @@ class TaskApiTest extends TestCase
 
         Sanctum::actingAs($admin);
 
-        $response = $this->getJson("/api/projects/{$project->id}/tasks");
+        $response = $this->getJson("/projects/{$project->id}/tasks");
 
         $response
             ->assertOk()

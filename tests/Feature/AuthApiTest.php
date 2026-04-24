@@ -16,7 +16,7 @@ class AuthApiTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response = $this->postJson('/api/auth/login', [
+        $response = $this->postJson('/auth/login', [
             'email' => $user->email,
             'password' => 'password123',
         ]);
@@ -35,7 +35,7 @@ class AuthApiTest extends TestCase
 
     public function test_register_creates_member_account(): void
     {
-        $response = $this->postJson('/api/auth/register', [
+        $response = $this->postJson('/auth/register', [
             'name' => 'New Member',
             'email' => 'new.member@example.com',
             'password' => 'password123',

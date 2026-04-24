@@ -1,13 +1,13 @@
 # Task Manager API (Laravel)
 
-Laravel is the primary backend for the assignment. It handles authentication, project management, task assignment, and role-based access control. The Django service is used only for overdue-task rule evaluation.
+Laravel is the primary backend for the task manager. It handles authentication, project management, task ownership, and role-based access control. The Django service is used only for overdue-task rule evaluation.
 
 ## What is implemented
 
 - Sanctum token authentication
 - Role-based access for `admin` and `user`
 - Admin-only project creation
-- Admin-only task creation and assignment
+- Admin-only task creation and user allocation
 - Member-only visibility for assigned work
 - Task status updates with Django-driven overdue rules
 - Consistent JSON responses
@@ -23,17 +23,17 @@ Laravel is the primary backend for the assignment. It handles authentication, pr
 
 ## API routes
 
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-- `POST /api/auth/logout`
-- `GET /api/projects`
-- `POST /api/projects`
-- `GET /api/projects/{project}`
-- `GET /api/projects/{project}/tasks`
-- `POST /api/projects/{project}/tasks`
-- `PATCH /api/tasks/{task}/status`
-- `GET /api/users/assignees`
+- `POST /auth/register`
+- `POST /auth/login`
+- `GET /auth/me`
+- `POST /auth/logout`
+- `GET /projects`
+- `POST /projects`
+- `GET /projects/{project}`
+- `GET /projects/{project}/tasks`
+- `POST /projects/{project}/tasks`
+- `PATCH /tasks/{task}/status`
+- `GET /users/assignees`
 
 ## Django integration
 

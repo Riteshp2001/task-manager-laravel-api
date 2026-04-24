@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::query()->updateOrCreate(
             ['email' => 'admin@example.com'],
             [
-                'name' => 'Assignment Admin',
+                'name' => 'Admin User',
                 'password' => 'password123',
                 'role' => User::ROLE_ADMIN,
             ]
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $member = User::query()->updateOrCreate(
             ['email' => 'member@example.com'],
             [
-                'name' => 'Assignment Member',
+                'name' => 'Member User',
                 'password' => 'password123',
                 'role' => User::ROLE_USER,
             ]
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         $project = Project::query()->updateOrCreate(
             ['name' => 'Website Refresh'],
             [
-                'description' => 'Simple seeded project for quick assignment review.',
+                'description' => 'Simple seeded project with a few example tasks.',
                 'created_by' => $admin->id,
             ]
         );

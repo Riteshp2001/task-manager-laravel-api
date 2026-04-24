@@ -19,17 +19,17 @@ class ProjectApiTest extends TestCase
 
         Sanctum::actingAs($admin);
 
-        $response = $this->postJson('/api/projects', [
-            'name' => 'Assignment Project',
+        $response = $this->postJson('/projects', [
+            'name' => 'Feature Test Project',
             'description' => 'Created in a feature test.',
         ]);
 
         $response
             ->assertCreated()
-            ->assertJsonPath('data.project.name', 'Assignment Project');
+            ->assertJsonPath('data.project.name', 'Feature Test Project');
 
         $this->assertDatabaseHas('projects', [
-            'name' => 'Assignment Project',
+            'name' => 'Feature Test Project',
             'created_by' => $admin->id,
         ]);
     }
@@ -53,7 +53,7 @@ class ProjectApiTest extends TestCase
 
         Sanctum::actingAs($member);
 
-        $response = $this->getJson('/api/projects');
+        $response = $this->getJson('/projects');
 
         $response
             ->assertOk()
